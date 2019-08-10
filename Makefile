@@ -1,6 +1,5 @@
 
+PROVIDERS ?= aws azure google
 
-
-
-all:
-	echo "hello"
+package:
+	@$(foreach PROVIDER, $(PROVIDERS),cd $(PROVIDER) && make package && cd ..;)

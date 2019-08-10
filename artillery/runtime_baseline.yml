@@ -1,0 +1,11 @@
+config:
+  target: "{{ $processEnvironment.API_URL }}"
+  phases:
+    - duration: 600
+      arrivalRate: 10
+      
+scenarios:
+  - name "Hello":
+    flow:
+      - get:
+          url: "/"

@@ -1,0 +1,18 @@
+config:
+  target: 'https:/'
+  processor: "../../artillery/generator.js"
+  phases:
+    - duration: 60
+      arrivalRate: 10
+      
+scenarios:
+  - name "Database Write and Read":
+    flow:
+      - function: "generateRandomData"
+      - post:
+          url: "/users"
+          json:
+            name: "{{ name }}"
+            email: "{{ email }}"
+            dob: "{{ dob }}"
+            address: "{{ address }}"

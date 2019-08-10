@@ -54,8 +54,3 @@ services:
     working_dir: /var/task/aws-python3.6
     volumes:
       - .:/var/task  
-  gauth:
-    image: contino/aws-google-auth:0.0.28
-    env_file: .env.auth
-    volumes:
-      - ~/.aws:/root/.aws
