@@ -6,11 +6,8 @@ jobs:
 
     steps:
       - checkout
-
       - run:
-          name: Greeting
-          command: make
-
-      - run:
-          name: Print the Current Time
-          command: date
+          name: package
+          command: make package
+          environment:
+            PROVIDERS: aws
