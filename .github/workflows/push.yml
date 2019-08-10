@@ -1,0 +1,21 @@
+on: push
+name: AWS Lambda
+jobs:
+  build:
+    name: C# 2.1
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@master
+    - name: C# 2.1
+      uses: docker://flemay/musketeers
+      env:
+        RUNTIMES: aws-csharp2.1
+      with:
+        args: make package
+    - name: Go 1.x
+      uses: docker://flemay/musketeers
+      env:
+        RUNTIMES: 'aws-go1.x '
+      with:
+        entrypoint: make
+        args: package
