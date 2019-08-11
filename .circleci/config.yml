@@ -73,15 +73,15 @@ workflows:
           name: build-aws-java8
           provider: aws
           runtime: aws-java8
-      - build-aws:
+      - build:
           name: build-aws-nodejs8.10
           provider: aws
           runtime: aws-nodejs8.10
-      - build-aws:
+      - build:
           name: build-aws-python3.7
           provider: aws
           runtime: aws-python3.7
-      - build-aws:
+      - build:
           name: build-aws-ruby2.5
           provider: aws
           runtime: aws-ruby2.5
