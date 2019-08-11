@@ -39,7 +39,7 @@ workflows:
     jobs:
       - build-aws
       - deploy-aws:
-          require: 
+          requires: 
             - build-aws
           filters:
             branches:
