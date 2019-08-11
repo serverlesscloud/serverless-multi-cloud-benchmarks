@@ -8,7 +8,7 @@ jobs:
       - checkout
       - setup_remote_docker:
           docker_layer_caching: true
-      - run: echo $PWD
+      - run: ls -v
       - run:
           name: package
           command: make package
