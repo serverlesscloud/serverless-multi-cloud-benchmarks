@@ -15,7 +15,7 @@ package: ../.env build
 	$(SLS) package
 
 deploy: ../.env
-	$(SLS) deploy
+	$(SLS) deploy --package .serverless
 
 remove: ../.env
 	$(SLS) remove
