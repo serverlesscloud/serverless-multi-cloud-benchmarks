@@ -24,18 +24,17 @@ commands:
           command: make package
           working_directory: ~/project/aws/<< parameters.runtime >>
       - persist_to_workspace:
-        root: .
-        paths: .serverless
-
-
+          root: .
+          paths: .serverless
 
 jobs:
-  pack-aws-go1.x:
+  package-aws-go1.x:
     executor: aws-executor
     steps:
       - package:
           runtime: aws-csharp2.1
   deploy:
+    executor: aws-executor
     parameters:
       runtime:
         type: string
@@ -54,6 +53,15 @@ workflows:
   build-deploy-aws:
     jobs:
       - package-aws-go1.x
+      - deploy-aws:
+          name: deploy-aws-go1.x
+          runtime: aws-go1.x
+          requires: 
+            - package-aws-go1.x
+          filters:
+            branches:
+              only:
+                - master
           # name: build-aws-csharp2.1
           # runtime: aws-csharp2.1
       # - build-aws:
@@ -83,12 +91,3 @@ workflows:
       #       branches:
       #         only:
       #           - master
-      - deploy-aws:
-          name: deploy-aws-go1.x
-          runtime: aws-go1.x
-          requires: 
-            - package-aws-go1.x
-          filters:
-            branches:
-              only:
-                - master
