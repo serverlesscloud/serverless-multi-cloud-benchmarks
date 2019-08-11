@@ -33,7 +33,7 @@ jobs:
     steps:
       - package:
           runtime: aws-csharp2.1
-  deploy:
+  deploy-aws:
     executor: aws-executor
     parameters:
       runtime:
