@@ -26,7 +26,7 @@ commands:
       - persist_to_workspace:
           root: ~/project/<< parameters.provider >>/<< parameters.runtime >>
           paths: .serverless
-  deploy:
+  deployer:
     # branches:
     #   only:
     #     - master
@@ -95,43 +95,43 @@ jobs:
   deploy-aws-csharp2-1:
     executor: ubuntu 
     steps:
-      - deploy:
+      - deployer:
           provider: aws
           runtime: aws-csharp2.1
   deploy-aws-fsharp2-1:
     executor: ubuntu 
     steps:
-      - deploy:
+      - deployer:
           provider: aws
           runtime: aws-fsharp2.1
   deploy-aws-go1-x:
     executor: ubuntu 
     steps:
-      - deploy:
+      - deployer:
           provider: aws
           runtime: aws-go1.x
   deploy-aws-java8:
     executor: ubuntu 
     steps:
-      - deploy:
+      - deployer:
           provider: aws
           runtime: aws-java8
   deploy-aws-nodejs8-10:
     executor: ubuntu 
     steps:
-      - deploy:
+      - deployer:
           provider: aws
           runtime: aws-nodejs8.10
   deploy-aws-python3-7:
     executor: ubuntu 
     steps:
-      - deploy:
+      - deployer:
           provider: aws
           runtime: aws-python3.7
   deploy-aws-ruby2-5:
     executor: ubuntu 
     steps:
-      - deploy:
+      - deployer:
           provider: aws
           runtime: aws-ruby2.5
 
