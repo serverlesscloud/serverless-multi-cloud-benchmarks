@@ -24,17 +24,16 @@ jobs:
         type: string
         default: ""
     executor: aws-executor
-    persist_to_workspace:
-      root: ~/project/aws/<< parameters.runtime >>
-      paths:
-        - .serverless
     steps:
       - checkout
       - run:
           name: << parameters.runtime >>
-          command: make build
+          command: make package
           working_directory: ~/project/aws/<< parameters.runtime >>
-
+      - persist_to_workspace:
+        root: ~/project/aws/
+        paths:
+          - << parameters.runtime >>/.serverless
   deploy-aws:
     executor: aws-executor
     parameters:
@@ -43,6 +42,8 @@ jobs:
         default: ""
     steps:
       - checkout
+      - attach_workspace:
+        at: ~/project/aws/
       - deploy:
           name: << parameters.runtime >>
           command: make deploy
@@ -55,8 +56,24 @@ workflows:
           name: build-aws-csharp2.1
           runtime: aws-csharp2.1
       - build-aws:
+          name: build-aws-fsharp2.1
+          runtime: aws-csharp2.1
+      - build-aws:
           name: build-aws-go1.x
           runtime: aws-go1.x
+      - build-aws:
+          name: build-aws-java8
+          runtime: aws-java8
+      - build-aws:
+          name: build-aws-nodejs8.10
+          runtime: aws-nodejs8.10
+      - build-aws:
+          name: build-aws-python3.7
+          runtime: aws-python3.7
+      - build-aws:
+          name: build-aws-ruby2.5
+          runtime: aws-ruby2.5
+
       - deploy-aws:
           name: deploy-aws-csharp2.1
           runtime: aws-csharp2.1
