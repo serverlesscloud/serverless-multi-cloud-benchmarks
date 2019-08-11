@@ -55,7 +55,7 @@ jobs:
           command: make package
           environment:
             RUNTIME: aws-python2.7
-                  - run:
+      - run:
           name: aws-python3.6
           command: make package
           environment:
