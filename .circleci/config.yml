@@ -33,6 +33,10 @@ jobs:
           command: make package
           environment:
             RUNTIME: << parameters.runtime >>
+    persist_to_workspace:
+      root: ~/project/aws/<< parameters.runtime >>
+      paths:
+        - .serverless
       # - run:
       #     name: aws-fhsharp2.1
       #     command: make package
@@ -88,9 +92,9 @@ workflows:
   version: 2
   build-deploy-aws:
     jobs:
-      - build-aws
+      - build-aws:
           runtime: aws-csharp2.1
-      - build-aws
+      - build-aws:
           runtime: aws-go1.x
       - build-gcp
       - deploy-aws:
