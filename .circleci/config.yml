@@ -18,7 +18,7 @@ jobs:
           name: google-nodejs8
           command: make package
           environment:
-            RUNTIME: aws-nodejs8
+            RUNTIMES: google-nodejs8
   build-aws:
     parameters:
       runtime:
@@ -32,62 +32,22 @@ jobs:
           name: << parameters.runtime >>
           command: make package
           environment:
-            RUNTIME: << parameters.runtime >>
+            RUNTIMES: << parameters.runtime >>
     # persist_to_workspace:
     #   root: ~/project/aws/<< parameters.runtime >>
     #   paths:
     #     - .serverless
-      # - run:
-      #     name: aws-fhsharp2.1
-      #     command: make package
-      #     environment:
-      #       RUNTIME: aws-fhsharp2.1
-      # - run:
-      #     name: aws-go1.x
-      #     command: make package
-      #     environment:
-      #       RUNTIME: aws-go1.x
-      # - run:
-      #     name: aws-java8
-      #     command: make package
-      #     environment:
-      #       RUNTIME: aws-java8
-      # - run:
-      #     name: aws-nodejs8.10
-      #     command: make package
-      #     environment:
-      #       RUNTIME: aws-nodejs8.10
-      # - run:
-      #     name: aws-python2.7
-      #     command: make package
-      #     environment:
-      #       RUNTIME: aws-python2.7
-      # - run:
-      #     name: aws-python3.6
-      #     command: make package
-      #     environment:
-      #       RUNTIME: aws-python3.6
-      # - run:
-      #     name: aws-python3.7
-      #     command: make package
-      #     environment:
-      #       RUNTIME: aws-python3.7
-      # - run:
-      #     name: aws-ruby2.5
-      #     command: make package
-      #     environment:
-      #       RUNTIME: aws-ruby2.5
   deploy-aws:
     executor: aws-executor
     parallelism: 2
     steps:
       - checkout
-      - run:
-          name: aws-chsharp2.1
+      - deploy:
+          name: << parameters.runtime >>
           working_directory: ~/project/aws
           command: make deploy
           environment:
-            RUNTIME: aws-chsharp2.1
+            RUNTIME: << parameters.runtime >>
 workflows:
   version: 2
   build-deploy-aws:
@@ -98,7 +58,9 @@ workflows:
       - build-aws:
           name: build-aws-go1.x
           runtime: aws-go1.x
-      - build-gcp
+      - deploy-aws:
+          name: deploy-aws-csharp2.1
+          runtime: aws-csharp2.1
       # - deploy-aws:
       #     requires: 
       #       - build-aws
