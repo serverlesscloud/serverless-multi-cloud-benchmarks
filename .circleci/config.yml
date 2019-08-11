@@ -1,16 +1,33 @@
 version: 2
 jobs:
   build:
-    docker:
-      - image: flemay/musketeers
-    working_directory: ~/aws
+    # docker:
+    #   - image: flemay/musketeers
+    machine:
+      image: ubuntu-1604:201903-01
+      docker_layer_caching: true
     steps:
       - checkout
-      - setup_remote_docker:
-          docker_layer_caching: true
+      # - setup_remote_docker:
+      #     docker_layer_caching: true
       - run: ls -v
       - run:
           name: package
+          working_directory: ~/aws
           command: make package
           environment:
             PROVIDERS: aws
+  # build:
+  #   docker:
+  #     - image: flemay/musketeers
+  #   working_directory: ~/aws
+  #   steps:
+  #     - checkout
+  #     - setup_remote_docker:
+  #         docker_layer_caching: true
+  #     - run: ls -v
+  #     - run:
+  #         name: package
+  #         command: make package
+  #         environment:
+  #           PROVIDERS: aws
