@@ -11,7 +11,6 @@ executors:
 jobs:
   build-gcp:
     executor: gcp-executor
-    working_directory: ~/project/google
     steps:
       - checkout
       - run:
@@ -25,13 +24,14 @@ jobs:
         type: string
         default: ""
     executor: aws-executor
-    working_directory: ~/project/aws
     steps:
       - checkout
       - run:
           name: << parameters.runtime >>
           command: make package
+          working_directory: ~/project/aws
           environment:
+            PROVIDERS: aws 
             RUNTIMES: << parameters.runtime >>
     # persist_to_workspace:
     #   root: ~/project/aws/<< parameters.runtime >>
@@ -47,9 +47,10 @@ jobs:
       - checkout
       - deploy:
           name: << parameters.runtime >>
-          working_directory: ~/project/aws
           command: make deploy
+          working_directory: ~/project/aws
           environment:
+            PROVIDERS: aws 
             RUNTIME: << parameters.runtime >>
 workflows:
   version: 2
@@ -64,10 +65,18 @@ workflows:
       - deploy-aws:
           name: deploy-aws-csharp2.1
           runtime: aws-csharp2.1
-      # - deploy-aws:
-      #     requires: 
-      #       - build-aws
-      #     filters:
-      #       branches:
-      #         only:
-      #           - master
+          requires: 
+            - build-aws-csharp2.1
+          filters:
+            branches:
+              only:
+                - master
+      - deploy-aws:
+          name: deploy-aws-go1.x
+          runtime: aws-go1.x
+          requires: 
+            - build-aws-go1.x
+          filters:
+            branches:
+              only:
+                - master
