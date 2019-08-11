@@ -1,22 +1,23 @@
-ifdef NATIVE
-	SLS=serverless
-else
-	SLS=docker-compose -f ../docker-compose.yml run --rm -w /opt/app/$(RUNTIME) sls
-endif
+BUILDER=docker-compose -f ../docker-compose.yml run --rm $(RUNTIME)
+SLS=docker-compose -f ../docker-compose.yml run --rm -w /opt/app/$(RUNTIME) sls
 
-# Docker Entrypoint
+# Builder
+clean: .env
+	$(BUILDER) make _clean
+
+build:
+	$(BUILDER) make _build
+
+# Serverless 
 package: .env build
 	$(SLS) package
 
 deploy: .env
-	$(SLS) deploy --region asia-northeast1
+	$(SLS) _deploy
 
 remove: .env
-	$(SLS) remove
+	$(SLS) _remove
 
 # Helpers
 .env:
 	cp ../.env.template .env
-
-artillery:
-	artillery run artillery.yml -o results.json

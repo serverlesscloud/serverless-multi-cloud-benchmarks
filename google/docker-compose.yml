@@ -1,12 +1,12 @@
 version: '3.4'
 services:
-  google-nodejs:
+  google-nodejs8:
     image: launcher.gcr.io/google/nodejs
     working_dir: /var/task/google-nodejs8
     volumes:
       - .:/var/task
   sls:
-    image: amaysim/serverless:1.30.3
+    image: amaysim/serverless:1.49.0
     env_file: .env
     entrypoint: serverless
     volumes:

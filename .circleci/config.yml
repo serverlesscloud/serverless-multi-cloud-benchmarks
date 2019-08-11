@@ -4,29 +4,77 @@ executors:
     machine: 
       image: ubuntu-1604:201903-01
       docker_layer_caching: true
-
+  gcp-executor:
+    machine: 
+      image: ubuntu-1604:201903-01
+      docker_layer_caching: true
 jobs:
+  build-gcp:
+    executor: gcp-executor
+    working_directory: ~/project/google
+    steps:
+      - checkout
+      - run:
+          name: google-nodejs8
+          command: make package
+          environment:
+            RUNTIME: aws-nodejs8
   build-aws:
     executor: aws-executor
-    parallelism: 2
+    parallelism: 4
+    working_directory: ~/project/aws
     steps:
       - checkout
       - run:
           name: aws-chsharp2.1
-          working_directory: ~/project/aws
           command: make package
           environment:
             RUNTIME: aws-chsharp2.1
       - run:
+          name: aws-fhsharp2.1
+          command: make package
+          environment:
+            RUNTIME: aws-fhsharp2.1
+      - run:
           name: aws-go1.x
-          working_directory: ~/project/aws
           command: make package
           environment:
             RUNTIME: aws-go1.x
+      - run:
+          name: aws-java8
+          command: make package
+          environment:
+            RUNTIME: aws-java8
+      - run:
+          name: aws-nodejs8.10
+          command: make package
+          environment:
+            RUNTIME: aws-nodejs8.10
+      - run:
+          name: aws-python2.7
+          command: make package
+          environment:
+            RUNTIME: aws-python2.7
+                  - run:
+          name: aws-python3.6
+          command: make package
+          environment:
+            RUNTIME: aws-python3.6
+      - run:
+          name: aws-python3.7
+          command: make package
+          environment:
+            RUNTIME: aws-python3.7
+      - run:
+          name: aws-ruby2.5
+          command: make package
+          environment:
+            RUNTIME: aws-ruby2.5
   deploy-aws:
     executor: aws-executor
     parallelism: 2
     steps:
+      - checkout
       - run:
           name: aws-chsharp2.1
           working_directory: ~/project/aws
@@ -38,6 +86,7 @@ workflows:
   build-deploy-aws:
     jobs:
       - build-aws
+      - build-gcp
       - deploy-aws:
           requires: 
             - build-aws

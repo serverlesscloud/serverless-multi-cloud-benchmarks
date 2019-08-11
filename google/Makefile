@@ -6,14 +6,14 @@ RUNTIMES ?= $(shell ls -d */)
 all: clean build deploy
 .PHONY: clean build deploy
 
-cleanAll: .env
+clean: .env
 	@$(foreach RUNTIME, $(RUNTIMES),cd $(RUNTIME), make _clean;)
 
-packageAll: .env
+package: .env
 	@$(foreach RUNTIME, $(RUNTIMES),cd $(RUNTIME); make package);)
 
-deployAll: .env
+deploy: .env
 	@$(foreach RUNTIME, $(RUNTIMES),cd $(RUNTIME); make deploy);)
 
-removeAll: .env
+remove: .env
 	@$(foreach RUNTIME, $(RUNTIMES),cd $(RUNTIME); make _remove);)

@@ -9,17 +9,11 @@ services:
       - .:/opt/app
   aws-csharp2.1:
     image: lambci/lambda:build-dotnetcore2.1
-    # build:
-    #   context: .
-    #   dockerfile: Dockerfile-lambdatools
     working_dir: /var/task/aws-csharp2.1
     volumes:
       - .:/var/task
   aws-fsharp2.1:
     image: lambci/lambda:build-dotnetcore2.1
-    # build:
-    #   context: .
-    #   dockerfile: Dockerfile-lambdatools
     working_dir: /var/task/aws-fsharp2.1
     volumes:
       - .:/var/task  
