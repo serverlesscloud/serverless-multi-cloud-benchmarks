@@ -97,10 +97,10 @@ workflows:
       - build-aws:
           runtime: aws-go1.x
       - build-gcp
-      - deploy-aws:
-          requires: 
-            - build-aws
-          filters:
-            branches:
-              only:
-                - master
+      # - deploy-aws:
+      #     requires: 
+      #       - build-aws
+      #     filters:
+      #       branches:
+      #         only:
+      #           - master
