@@ -7,8 +7,8 @@ executors:
       docker_layer_caching: true
 
 jobs:
-  exectutor: ubuntu 
   build:
+    executor: ubuntu 
     parameters:
       provider: 
         type: string
@@ -28,7 +28,7 @@ jobs:
           root: ~/project/<< parameters.provider >>/<< parameters.runtime >>
           paths: .serverless
   deploy:
-    exectutor: ubuntu 
+    executor: ubuntu 
     branches:
       only:
         - master
