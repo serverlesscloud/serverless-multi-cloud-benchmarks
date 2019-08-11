@@ -28,10 +28,10 @@ jobs:
           root: ~/project/<< parameters.provider >>/<< parameters.runtime >>
           paths: .serverless
   deploy:
+    # branches:
+    #   only:
+    #     - master
     executor: ubuntu 
-    branches:
-      only:
-        - master
     parameters:
       provider: 
         type: string
