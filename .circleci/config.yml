@@ -1,33 +1,45 @@
-version: 2
-jobs:
-  build:
-    # docker:
-    #   - image: flemay/musketeers
-    machine:
+version: 2.1
+executors:
+  aws-executor:
+    machine: 
       image: ubuntu-1604:201903-01
       docker_layer_caching: true
+
+jobs:
+  build:
+    executor: aws-executor
+    parallelism: 2
     steps:
       - checkout
-      # - setup_remote_docker:
-      #     docker_layer_caching: true
-      - run: ls -v
       - run:
-          name: package
-          # working_directory: ~/aws
+          name: aws-chsharp2.1
+          working_directory: ~/project/aws
           command: make package
           environment:
-            PROVIDERS: aws
-  # build:
-  #   docker:
-  #     - image: flemay/musketeers
-  #   working_directory: ~/aws
-  #   steps:
-  #     - checkout
-  #     - setup_remote_docker:
-  #         docker_layer_caching: true
-  #     - run: ls -v
-  #     - run:
-  #         name: package
-  #         command: make package
-  #         environment:
-  #           PROVIDERS: aws
+            RUNTIME: aws-chsharp2.1
+      - run:
+          name: aws-go1.x
+          working_directory: ~/project/aws
+          command: make package
+          environment:
+            RUNTIME: aws-go1.x
+  build:
+    executor: aws-executor
+    parallelism: 2
+    steps:
+      - run:
+          name: aws-chsharp2.1
+          working_directory: ~/project/aws
+          command: make deploy
+          environment:
+            RUNTIME: aws-chsharp2.1
+workflows:
+  version: 2
+  build-deploy:
+    jobs:
+      - build
+      - deploy:
+          require: build
+          filters:
+            branches:
+              - master
