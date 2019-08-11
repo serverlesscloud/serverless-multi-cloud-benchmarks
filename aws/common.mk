@@ -7,7 +7,7 @@ all: clean package deploy
 clean: ../.env
 	$(BUILDER) make _clean
 
-build:
+build: ../.env
 	$(BUILDER) make _build
 
 # Serverless

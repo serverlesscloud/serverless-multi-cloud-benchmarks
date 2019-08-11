@@ -19,13 +19,13 @@ jobs:
     steps:
       - checkout
       - attach_workspace:
-          at: ~/project/aws/<< parameters.runtime >>
+          at: ~/project/<< parameters.provider >>/<< parameters.runtime >>
       - run:
           name: Build and Package
-          working_directory: ~/project/aws/<< parameters.runtime >>
+          working_directory: ~/project/<< parameters.provider >>/<< parameters.runtime >>
           command: make build package
       - persist_to_workspace:
-          root: ~/project/aws/<< parameters.runtime >>
+          root: ~/project/<< parameters.provider >>/<< parameters.runtime >>
           paths: .serverless
   deploy:
     # branches:
