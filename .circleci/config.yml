@@ -13,7 +13,7 @@ jobs:
       - run: ls -v
       - run:
           name: package
-          working_directory: ~/aws
+          # working_directory: ~/aws
           command: make package
           environment:
             PROVIDERS: aws
