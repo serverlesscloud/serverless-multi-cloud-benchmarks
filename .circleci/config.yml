@@ -6,7 +6,8 @@ jobs:
     docker_layer_caching: true
   build:
     parameters:
-      provider: string
+      provider: 
+        type: string
         default: "aws"
       runtime:
         type: string
@@ -27,7 +28,8 @@ jobs:
       only:
         - master
     parameters:
-      provider: string
+      provider: 
+        type: string
         default: "aws"
       runtime:
         type: string
