@@ -157,4 +157,15 @@ workflows:
       - deploy-aws-go1-x:
           requires: 
             - build-aws-go1-x
-
+      - deploy-aws-java8:
+          requires: 
+            - build-aws-java8
+      - deploy-aws-nodejs8-10:
+          requires: 
+            - build-aws-nodejs8-10
+      - deploy-aws-python-3-7:
+          requires: 
+            - build-aws-python-3-7
+      - deploy-aws-ruby2-5:
+          requires: 
+            - build-aws-ruby2-5
