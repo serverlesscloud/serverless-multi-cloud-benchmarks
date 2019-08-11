@@ -28,7 +28,7 @@ commands:
           paths: .serverless
 
 jobs:
-  package-aws-go1.x:
+  package-aws-go1-x:
     executor: aws-executor
     steps:
       - package:
@@ -52,12 +52,12 @@ workflows:
   version: 2
   build-deploy-aws:
     jobs:
-      - package-aws-go1.x
+      - package-aws-go1-x
       - deploy-aws:
           name: deploy-aws-go1.x
           runtime: aws-go1.x
           requires: 
-            - package-aws-go1.x
+            - package-aws-go1-x
           filters:
             branches:
               only:
