@@ -163,7 +163,7 @@ workflows:
       - deploy-aws-nodejs8-10:
           requires: 
             - build-aws-nodejs8-10
-      - deploy-aws-python-3-7:
+      - deploy-aws-python3-7:
           requires: 
             - build-aws-python3-7
       - deploy-aws-ruby2-5:
