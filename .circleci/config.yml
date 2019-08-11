@@ -39,7 +39,10 @@ jobs:
     #     - .serverless
   deploy-aws:
     executor: aws-executor
-    parallelism: 2
+    parameters:
+      runtime:
+        type: string
+        default: ""
     steps:
       - checkout
       - deploy:
