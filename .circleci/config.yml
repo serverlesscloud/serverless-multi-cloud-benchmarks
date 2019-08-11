@@ -1,9 +1,12 @@
 version: 2.1
 
-jobs:
-  machine: 
+executors: 
+  ubuntu: 
     image: ubuntu-1604:201903-01
     docker_layer_caching: true
+
+jobs:
+  exectutor: ubuntu 
   build:
     parameters:
       provider: 
@@ -24,6 +27,7 @@ jobs:
           root: ~/project/<< parameters.provider >>/<< parameters.runtime >>
           paths: .serverless
   deploy:
+    exectutor: ubuntu 
     branches:
       only:
         - master
