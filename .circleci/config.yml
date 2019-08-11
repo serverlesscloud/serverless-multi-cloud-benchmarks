@@ -27,9 +27,9 @@ commands:
           root: ~/project/<< parameters.provider >>/<< parameters.runtime >>
           paths: .serverless
   deployer:
-    branches:
-      only:
-        - master
+    # branches:
+    #   only:
+    #     - master
     parameters:
       provider: 
         type: string
