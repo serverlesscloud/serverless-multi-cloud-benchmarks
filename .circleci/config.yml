@@ -3,10 +3,12 @@ jobs:
   build:
     docker:
       - image: flemay/musketeers
-
+    working_directory: ~/aws
     steps:
       - checkout
       - setup_remote_docker
+          docker_layer_caching: true
+      - run: echo $PWD
       - run:
           name: package
           command: make package
