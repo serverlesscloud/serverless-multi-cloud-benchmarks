@@ -3,7 +3,8 @@ provider:
   name: aws
   runtime: java8
 package:
-  artifact: target/hello-dev.jar
+  exclude: ./**
+  include: target/hello-dev.jar
 
 functions:
   hello:

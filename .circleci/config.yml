@@ -6,9 +6,8 @@ executors:
       image: ubuntu-1604:201903-01
       docker_layer_caching: true
 
-jobs:
+commands:
   build:
-    executor: ubuntu 
     parameters:
       provider: 
         type: string
@@ -31,7 +30,6 @@ jobs:
     # branches:
     #   only:
     #     - master
-    executor: ubuntu 
     parameters:
       provider: 
         type: string
@@ -48,54 +46,115 @@ jobs:
           command: make deploy
           working_directory: ~/project/<< parameters.provider >>/<< parameters.runtime >>
 
+jobs:
+  # Build Jobs
+  build-aws-csharp2-1:
+    executor: ubuntu 
+    steps:
+      - build:
+          provider: aws
+          runtime: aws-csharp2.1
+  build-aws-fsharp2-1:
+    executor: ubuntu 
+    steps:
+      - build:
+          provider: aws
+          runtime: aws-fsharp2.1
+  build-aws-go1-x:
+    executor: ubuntu 
+    steps:
+      - build:
+          provider: aws
+          runtime: aws-go1.x
+  build-aws-java8:
+    executor: ubuntu 
+    steps:
+      - build:
+          provider: aws
+          runtime: aws-java8
+  build-aws-nodejs8-10:
+    executor: ubuntu 
+    steps:
+      - build:
+          provider: aws
+          runtime: aws-nodejs8.10
+  build-aws-python3-7:
+    executor: ubuntu 
+    steps:
+      - build:
+          provider: aws
+          runtime: aws-python3.7
+  build-aws-ruby2-5:
+    executor: ubuntu 
+    steps:
+      - build:
+          provider: aws
+          runtime: aws-ruby2.5
 
-  # package-aws-go1-x:
-  #   steps:
-  #     - package:
-  #         runtime: aws-go1.x    
+  # Deploy Jobs
+  deploy-aws-csharp2-1:
+    executor: ubuntu 
+    steps:
+      - deploy:
+          provider: aws
+          runtime: aws-csharp2.1
+  deploy-aws-fsharp2-1:
+    executor: ubuntu 
+    steps:
+      - deploy:
+          provider: aws
+          runtime: aws-fsharp2.1
+  deploy-aws-go1-x:
+    executor: ubuntu 
+    steps:
+      - deploy:
+          provider: aws
+          runtime: aws-go1.x
+  deploy-aws-java8:
+    executor: ubuntu 
+    steps:
+      - deploy:
+          provider: aws
+          runtime: aws-java8
+  deploy-aws-nodejs8-10:
+    executor: ubuntu 
+    steps:
+      - deploy:
+          provider: aws
+          runtime: aws-nodejs8.10
+  deploy-aws-python3-7:
+    executor: ubuntu 
+    steps:
+      - deploy:
+          provider: aws
+          runtime: aws-python3.7
+  deploy-aws-ruby2-5:
+    executor: ubuntu 
+    steps:
+      - deploy:
+          provider: aws
+          runtime: aws-ruby2.5
+
+
+
 workflows:
   version: 2
   build-deploy-aws:
     jobs:
-      - build:
-          name: build-aws-csharp2.1
-          provider: aws
-          runtime: aws-csharp2.1
-      - build:
-          name: build-aws-fsharp2.1
-          provider: aws
-          runtime: aws-fsharp2.1
-      - build:
-          name: build-aws-go1.x
-          provider: aws
-          runtime: aws-go1.x
-      - build:
-          name: build-aws-java8
-          provider: aws
-          runtime: aws-java8
-      - build:
-          name: build-aws-nodejs8.10
-          provider: aws
-          runtime: aws-nodejs8.10
-      - build:
-          name: build-aws-python3.7
-          provider: aws
-          runtime: aws-python3.7
-      - build:
-          name: build-aws-ruby2.5
-          provider: aws
-          runtime: aws-ruby2.5
-
-      - deploy:
-          name: deploy-aws-csharp2.1
-          provider: aws
-          runtime: aws-csharp2.1
+      - build-aws-csharp2-1
+      - build-aws-fsharp2-1
+      - build-aws-go1-x
+      - build-aws-java8
+      - build-aws-nodejs8-10
+      - build-aws-python3-7
+      - build-aws-ruby2-5
+      - deploy-aws-csharp2-1:
           requires: 
-            - build-aws-csharp2.1
-      - deploy:
-          name: deploy-aws-go1.x
-          provider: aws
-          runtime: aws-go1.x
+            - build-aws-csharp2-1
+      - deploy-aws-fsharp2-1:
           requires: 
-            - build-aws-go1.x
+            - build-aws-fsharp2-1
+      - deploy-aws-go-1-x:
+          requires: 
+            - build-aws-go1-x
 
