@@ -4,22 +4,22 @@ SLS=docker-compose -f ../docker-compose.yml run --rm -w /opt/app/$(RUNTIME) sls
 # Builder
 all: clean package deploy
 
-clean: .env
+clean: ../.env
 	$(BUILDER) make _clean
 
 build:
 	$(BUILDER) make _build
 
 # Serverless
-package: .env build
+package: ../.env build
 	$(SLS) package
 
-deploy: .env
+deploy: ../.env
 	$(SLS) deploy
 
-remove: .env
+remove: ../.env
 	$(SLS) remove
 
 # Helpers
-.env:
-	cp ../.env.template .env
+../.env:
+	cp ../.env.template ../.env

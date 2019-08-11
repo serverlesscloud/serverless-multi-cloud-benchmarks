@@ -32,7 +32,7 @@ jobs:
     executor: aws-executor
     steps:
       - package:
-          runtime: aws-csharp2.1
+          runtime: aws-go1.x
   deploy-aws:
     executor: aws-executor
     parameters:
