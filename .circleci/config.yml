@@ -33,10 +33,10 @@ jobs:
           command: make package
           environment:
             RUNTIME: << parameters.runtime >>
-    persist_to_workspace:
-      root: ~/project/aws/<< parameters.runtime >>
-      paths:
-        - .serverless
+    # persist_to_workspace:
+    #   root: ~/project/aws/<< parameters.runtime >>
+    #   paths:
+    #     - .serverless
       # - run:
       #     name: aws-fhsharp2.1
       #     command: make package
