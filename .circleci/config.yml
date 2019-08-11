@@ -1,10 +1,6 @@
 version: 2.1
 executors:
-  aws-executor:
-    machine: 
-      image: ubuntu-1604:201903-01
-      docker_layer_caching: true
-  gcp-executor:
+  ubuntu-executor:
     machine: 
       image: ubuntu-1604:201903-01
       docker_layer_caching: true
@@ -24,17 +20,17 @@ commands:
           command: make package
           working_directory: ~/project/aws/<< parameters.runtime >>
       - persist_to_workspace:
-          root: .
+          root: ~/project/aws/<< parameters.runtime >>
           paths: .serverless
 
 jobs:
   package-aws-go1-x:
-    executor: aws-executor
+    executor: ubuntu-executor
     steps:
       - package:
           runtime: aws-go1.x
   deploy-aws:
-    executor: aws-executor
+    executor: ubuntu-executor
     parameters:
       runtime:
         type: string
