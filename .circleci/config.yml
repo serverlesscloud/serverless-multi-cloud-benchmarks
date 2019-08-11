@@ -64,7 +64,7 @@ workflows:
       - build:
           name: build-aws-fsharp2.1
           provider: aws
-          runtime: aws-csharp2.1
+          runtime: aws-fsharp2.1
       - build:
           name: build-aws-go1.x
           provider: aws
@@ -91,11 +91,11 @@ workflows:
           provider: aws
           runtime: aws-csharp2.1
           requires: 
-            - package-aws-csharp2.1
+            - build-aws-csharp2.1
       - deploy:
           name: deploy-aws-go1.x
           provider: aws
           runtime: aws-go1.x
           requires: 
-            - package-aws-go1.x
+            - build-aws-go1.x
 
