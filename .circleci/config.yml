@@ -24,19 +24,17 @@ jobs:
         type: string
         default: ""
     executor: aws-executor
+    persist_to_workspace:
+      root: ~/project/aws/<< parameters.runtime >>
+      paths:
+        - .serverless
     steps:
       - checkout
       - run:
           name: << parameters.runtime >>
-          command: make package
-          working_directory: ~/project/aws
-          environment:
-            PROVIDERS: aws 
-            RUNTIMES: << parameters.runtime >>
-    # persist_to_workspace:
-    #   root: ~/project/aws/<< parameters.runtime >>
-    #   paths:
-    #     - .serverless
+          command: make build
+          working_directory: ~/project/aws/<< parameters.runtime >>
+
   deploy-aws:
     executor: aws-executor
     parameters:
@@ -48,10 +46,7 @@ jobs:
       - deploy:
           name: << parameters.runtime >>
           command: make deploy
-          working_directory: ~/project/aws
-          environment:
-            PROVIDERS: aws 
-            RUNTIME: << parameters.runtime >>
+          working_directory: ~/project/aws/<< parameters.runtime >>
 workflows:
   version: 2
   build-deploy-aws:
