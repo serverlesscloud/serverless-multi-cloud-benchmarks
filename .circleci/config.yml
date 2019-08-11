@@ -1,89 +1,94 @@
 version: 2.1
-executors:
-  ubuntu-executor:
-    machine: 
-      image: ubuntu-1604:201903-01
-      docker_layer_caching: true
-
-commands:
-  package:
-    parameters:
-      runtime:
-        type: string
-        default: ""
-    steps:
-      - checkout
-      - attach_workspace:
-          at: ~/project/aws/<< parameters.runtime >>
-      - run:
-          name: << parameters.runtime >>
-          command: make package
-          working_directory: ~/project/aws/<< parameters.runtime >>
-      - persist_to_workspace:
-          root: ~/project/aws/<< parameters.runtime >>
-          paths: .serverless
 
 jobs:
-  package-aws-go1-x:
-    executor: ubuntu-executor
-    steps:
-      - package:
-          runtime: aws-go1.x
-  deploy-aws:
-    executor: ubuntu-executor
+  machine: 
+    image: ubuntu-1604:201903-01
+    docker_layer_caching: true
+  build:
     parameters:
+      provider: string
+        default: "aws"
       runtime:
         type: string
         default: ""
     steps:
       - checkout
       - attach_workspace:
-          at: ~/project/aws/<< parameters.runtime >>
+          at: ~/project/<< parameters.provider >>/<< parameters.runtime >>
+      - run:
+          name: << parameters.runtime >>
+          command: make build package
+          working_directory: ~/project/<< parameters.provider >>/<< parameters.runtime >>
+      - persist_to_workspace:
+          root: ~/project/<< parameters.provider >>/<< parameters.runtime >>
+          paths: .serverless
+  deploy:
+    branches:
+      only:
+        - master
+    parameters:
+      provider: string
+        default: "aws"
+      runtime:
+        type: string
+        default: ""
+    steps:
+      - checkout
+      - attach_workspace:
+          at: ~/project/<< parameters.provider >>/<< parameters.runtime >>
       - deploy:
           name: << parameters.runtime >>
-          command: make package
-          working_directory: ~/project/aws/<< parameters.runtime >>
+          command: make deploy
+          working_directory: ~/project/<< parameters.provider >>/<< parameters.runtime >>
 
+
+  # package-aws-go1-x:
+  #   steps:
+  #     - package:
+  #         runtime: aws-go1.x    
 workflows:
   version: 2
   build-deploy-aws:
     jobs:
-      - package-aws-go1-x
-      - deploy-aws:
+      - build:
+          name: build-aws-csharp2.1
+          provider: aws
+          runtime: aws-csharp2.1
+      - build:
+          name: build-aws-fsharp2.1
+          provider: aws
+          runtime: aws-csharp2.1
+      - build:
+          name: build-aws-go1.x
+          provider: aws
+          runtime: aws-go1.x
+      - build:
+          name: build-aws-java8
+          provider: aws
+          runtime: aws-java8
+      - build-aws:
+          name: build-aws-nodejs8.10
+          provider: aws
+          runtime: aws-nodejs8.10
+      - build-aws:
+          name: build-aws-python3.7
+          provider: aws
+          runtime: aws-python3.7
+      - build-aws:
+          name: build-aws-ruby2.5
+          provider: aws
+          runtime: aws-ruby2.5
+
+      - deploy:
+          name: deploy-aws-csharp2.1
+          provider: aws
+          runtime: aws-csharp2.1
+          requires: 
+            - package-aws-csharp2.1
+      - deploy:
           name: deploy-aws-go1.x
+          provider: aws
           runtime: aws-go1.x
           requires: 
-            - package-aws-go1-x
-          filters:
-            branches:
-              only:
-                - master
-          # name: build-aws-csharp2.1
-          # runtime: aws-csharp2.1
-      # - build-aws:
-      #     name: build-aws-fsharp2.1
-      #     runtime: aws-csharp2.1
-      # - build-aws:
-      #     name: build-aws-go1.x
-      #     runtime: aws-go1.x
-      # - build-aws:
-      #     name: build-aws-java8
-      #     runtime: aws-java8
-      # - build-aws:
-      #     name: build-aws-nodejs8.10
-      #     runtime: aws-nodejs8.10
-      # - build-aws:
-      #     name: build-aws-python3.7
-      #     runtime: aws-python3.7
-      # - build-aws:
-      #     name: build-aws-ruby2.5
-      #     runtime: aws-ruby2.5
-      # - deploy-aws:
-      #     name: deploy-aws-csharp2.1
-      #     runtime: aws-csharp2.1
-      #     requires: 
-      #       - package-aws-csharp2.1
-      #     filters:
-      #       branches:
-      #         only:
-      #           - master
+            - package-aws-go1.x
+
