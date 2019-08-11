@@ -93,8 +93,10 @@ workflows:
   build-deploy-aws:
     jobs:
       - build-aws:
+          name: build-aws-csharp2.1
           runtime: aws-csharp2.1
       - build-aws:
+          name: build-aws-go1.x
           runtime: aws-go1.x
       - build-gcp
       # - deploy-aws:
