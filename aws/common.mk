@@ -1,6 +1,7 @@
 BUILDER=docker-compose -f ../docker-compose.yml run --rm $(RUNTIME)
 SLS=docker-compose -f ../docker-compose.yml run --rm -w /opt/app/$(RUNTIME) sls
 ARTILLERY=docker-compose -f ../docker-compose.yml run --rm -e API_URL=$(API_URL) artillery 
+ARTILLERY_BASH=docker-compose -f ../docker-compose.yml run --rm -e API_URL=$(API_URL) --entrypoint bash artillery 
 
 # Builder
 all: clean package deploy
@@ -34,3 +35,6 @@ report: ../.env
 
 shellBuilder:
 	$(BUILDER) bash
+
+shellArtillery:
+	$(ARTILLERY_BASH)

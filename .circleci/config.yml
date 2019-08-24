@@ -220,6 +220,12 @@ jobs:
       - benchmark:
           provider: aws
           runtime: aws-java8
+  benchmark-aws-nodejs8-10:
+    executor: ubuntu 
+    steps:
+      - benchmark:
+          provider: aws
+          runtime: aws-nodejs8.10
   benchmark-aws-python2-7:
     executor: ubuntu 
     steps:
@@ -238,12 +244,6 @@ jobs:
       - benchmark:
           provider: aws
           runtime: aws-python3.7
-  benchmark-aws-nodejs8-10:
-    executor: ubuntu 
-    steps:
-      - benchmark:
-          provider: aws
-          runtime: aws-nodejs8.10
   benchmark-aws-ruby2-5:
     executor: ubuntu 
     steps:
