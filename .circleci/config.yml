@@ -27,9 +27,6 @@ commands:
           root: ~/project/<< parameters.provider >>/<< parameters.runtime >>
           paths: .serverless
   deployer:
-    # branches:
-    #   only:
-    #     - master
     parameters:
       provider: 
         type: string
@@ -45,6 +42,17 @@ commands:
           name: Deploy
           command: make deploy
           working_directory: ~/project/<< parameters.provider >>/<< parameters.runtime >>
+  benchmark:
+    parameters:
+      provider: 
+        type: string
+        default: "aws"
+      runtime:
+        type: string
+        default: ""
+    steps:
+      - run:
+
 
 jobs:
   # Build Jobs

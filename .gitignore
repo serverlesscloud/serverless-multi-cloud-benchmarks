@@ -4,6 +4,10 @@ apis.txt
 .env
 .env.auth
 
+# performance tests
+*.json
+*.html
+
 # IDEs
 *.iml
 *.ipr

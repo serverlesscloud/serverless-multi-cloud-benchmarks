@@ -1,4 +1,5 @@
 RUNTIME=aws-ruby2.5
+API_URL=$(AWS_RUBY_2_5_URL)
 
 include ../common.mk
 

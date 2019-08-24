@@ -22,10 +22,6 @@ remove: .env
 reset: .env
 	@$(foreach RUNTIME, $(RUNTIMES), $(call resetDynamo, $(RUNTIME)) )
 
-auth: .env.auth
-	$(COMPOSE_RUN_AUTH)
-.PHONY: auth
-
 shell:
 	$(COMPOSE_RUN_AUTH) sh
 

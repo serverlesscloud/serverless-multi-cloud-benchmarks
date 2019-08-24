@@ -20,10 +20,11 @@ deploy: ../.env
 remove: ../.env
 	$(SLS) remove
 
-baseline:
-	artillery run --output $(RUNTIME).json ../artillery/runtime_baseline.yml
+baseLine:
+	echo $(API_URL)
+	API_URL=$(API_URL) artillery run --output $(RUNTIME).json ../../artillery/runtime_baseline.yml
 
-baselineReport:
+baseLineReport:
 	artillery report $(RUNTIME).json
 
 # Helpers

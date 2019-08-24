@@ -52,9 +52,4 @@ services:
     image: lambci/lambda:build-ruby2.5
     working_dir: /var/task/aws-ruby2.5
     volumes:
-      - .:/var/task
-  gauth:
-    image: contino/aws-google-auth:0.0.28
-    env_file: .env.auth
-    volumes:
-      - ~/.aws:/root/.aws  
+      - .:/var/task 
