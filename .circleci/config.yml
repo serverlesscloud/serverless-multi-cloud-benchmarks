@@ -358,36 +358,16 @@ workflows:
       - hold:
           type: approval
       # Benchmark
-      - benchmark-aws-csharp2-1:
-          # requires: 
-          #   - deploy-aws-csharp2-1
-      - benchmark-aws-fsharp2-1:
-          # requires: 
-          #   - deploy-aws-fsharp2-1
-      - benchmark-aws-go1-x:
-          # requires: 
-          #   - deploy-aws-go1-x
-      - benchmark-aws-java8:
-          # requires: 
-          #   - deploy-aws-java8
-      - benchmark-aws-nodejs8-10:
-          # requires: 
-          #   - deploy-aws-nodejs8-10
-      - benchmark-aws-nodejs10-x:
-          # requires: 
-          #   - deploy-aws-nodejs10-x
-      - benchmark-aws-python2-7:
-          # requires: 
-          #   - deploy-aws-python2-7
-      - benchmark-aws-python3-6:
-          # requires: 
-          #   - deploy-aws-python3-6
-      - benchmark-aws-python3-7:
-          # requires: 
-          #   - deploy-aws-python3-7
-      - benchmark-aws-ruby2-5:
-          # requires: 
-          #   - deploy-aws-ruby2-5
+      - benchmark-aws-csharp2-1
+      - benchmark-aws-fsharp2-1
+      - benchmark-aws-go1-x
+      - benchmark-aws-java8
+      - benchmark-aws-nodejs8-10
+      - benchmark-aws-nodejs10-x
+      - benchmark-aws-python2-7
+      - benchmark-aws-python3-6
+      - benchmark-aws-python3-7
+      - benchmark-aws-ruby2-5
       # Report
       - report-aws:
           requires: 
