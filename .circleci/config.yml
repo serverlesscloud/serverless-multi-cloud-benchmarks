@@ -59,6 +59,9 @@ commands:
           name: Performance Benchmark
           working_directory: ~/project/<< parameters.provider >>/<< parameters.runtime >>
           command: make baseLine
+          environment:
+            DURATION: 60
+            RATE: 10
       - persist_to_workspace:
           root: ~/project/artillery
           paths: 
@@ -81,6 +84,7 @@ commands:
           command: make report
       - store_artifacts:
           path: ~/project/artillery/report
+
 jobs:
   # Build Jobs
   build-aws-csharp2-1:
@@ -197,24 +201,45 @@ workflows:
 
       # Deploy
       - deploy-aws-csharp2-1:
+          filters:
+            branches:
+              only: master
           requires: 
             - build-aws-csharp2-1
       - deploy-aws-fsharp2-1:
+          filters:
+            branches:
+              only: master
           requires: 
             - build-aws-fsharp2-1
       - deploy-aws-go1-x:
+          filters:
+            branches:
+              only: master
           requires: 
             - build-aws-go1-x
       - deploy-aws-java8:
+          filters:
+            branches:
+              only: master
           requires: 
             - build-aws-java8
       - deploy-aws-nodejs8-10:
+          filters:
+            branches:
+              only: master
           requires: 
             - build-aws-nodejs8-10
       - deploy-aws-python3-7:
+          filters:
+            branches:
+              only: master
           requires: 
             - build-aws-python3-7
       - deploy-aws-ruby2-5:
+          filters:
+            branches:
+              only: master
           requires: 
             - build-aws-ruby2-5
 

@@ -22,10 +22,10 @@ remove: ../.env
 	$(SLS) remove
 
 # Artillery
-baseLine:
+baseLine: ../.env
 	$(ARTILLERY) run --output $(RUNTIME).json reports/runtime_baseline.yml
 
-report:
+report: ../.env
 	$(ARTILLERY) report reports/$(RUNTIME).json
 
 # Helpers
