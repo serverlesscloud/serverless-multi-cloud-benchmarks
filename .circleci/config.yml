@@ -20,13 +20,12 @@ commands:
       - attach_workspace:
           at: ~/project/<< parameters.provider >>/<< parameters.runtime >>
       - run:
-          name: Build and Package
+          name: Build
           working_directory: ~/project/<< parameters.provider >>/<< parameters.runtime >>
-          command: make build package
+          command: make build
       - persist_to_workspace:
           root: ~/project/<< parameters.provider >>/<< parameters.runtime >>
-          paths: 
-            - .serverless
+          paths:
             - target
             - bin
   deployer:
