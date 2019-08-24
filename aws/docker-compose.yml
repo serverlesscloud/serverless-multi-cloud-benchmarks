@@ -7,6 +7,12 @@ services:
     volumes:
       - ~/.aws:/root/.aws
       - .:/opt/app
+  artillery:
+    image: serverlesscloud/artillery
+    env_file: .env
+    working_dir: /artillery
+    volumes:
+      - ../artillery:/artillery
   aws-csharp2.1:
     image: lambci/lambda:build-dotnetcore2.1
     working_dir: /var/task/aws-csharp2.1

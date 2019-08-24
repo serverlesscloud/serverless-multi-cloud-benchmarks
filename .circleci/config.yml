@@ -25,7 +25,10 @@ commands:
           command: make build package
       - persist_to_workspace:
           root: ~/project/<< parameters.provider >>/<< parameters.runtime >>
-          paths: .serverless
+          paths: 
+            - .serverless
+            - target
+            - bin
   deployer:
     parameters:
       provider: 
@@ -51,9 +54,33 @@ commands:
         type: string
         default: ""
     steps:
+      - checkout
       - run:
-
-
+          name: Performance Benchmark
+          working_directory: ~/project/<< parameters.provider >>/<< parameters.runtime >>
+          command: make baseLine
+      - persist_to_workspace:
+          root: ~/project/artillery
+          paths: 
+            - reports
+  report:
+    parameters:
+      provider: 
+        type: string
+        default: "aws"
+      runtime:
+        type: string
+        default: ""
+    steps:
+      - checkout
+      - attach_workspace:
+          at: ~/project/artillery 
+      - run:
+          name: Performance Report
+          working_directory: ~/project/<< parameters.provider >>/<< parameters.runtime >>
+          command: make report
+      - store_artifacts:
+          path: ~/project/artillery/report
 jobs:
   # Build Jobs
   build-aws-csharp2-1:
@@ -142,13 +169,24 @@ jobs:
       - deployer:
           provider: aws
           runtime: aws-ruby2.5
-
-
+  benchmark-aws-ruby2-5:
+    executor: ubuntu 
+    steps:
+      - benchmark:
+          provider: aws
+          runtime: aws-ruby2.5
+  report-aws-ruby2-5:
+    executor: ubuntu 
+    steps:
+      - report:
+          provider: aws
+          runtime: aws-ruby2.5
 
 workflows:
   version: 2
   build-deploy-aws:
     jobs:
+      # Build
       - build-aws-csharp2-1
       - build-aws-fsharp2-1
       - build-aws-go1-x
@@ -156,6 +194,8 @@ workflows:
       - build-aws-nodejs8-10
       - build-aws-python3-7
       - build-aws-ruby2-5
+
+      # Deploy
       - deploy-aws-csharp2-1:
           requires: 
             - build-aws-csharp2-1
@@ -177,3 +217,13 @@ workflows:
       - deploy-aws-ruby2-5:
           requires: 
             - build-aws-ruby2-5
+
+      # Benchmark
+      - benchmark-aws-ruby2-5:
+          requires: 
+            - deploy-aws-ruby2-5
+
+      # Report
+      - report-aws-ruby2-5:
+          requires: 
+            - benchmark-aws-ruby2-5

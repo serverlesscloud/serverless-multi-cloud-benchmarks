@@ -1,5 +1,6 @@
 BUILDER=docker-compose -f ../docker-compose.yml run --rm $(RUNTIME)
 SLS=docker-compose -f ../docker-compose.yml run --rm -w /opt/app/$(RUNTIME) sls
+ARTILLERY=docker-compose -f ../docker-compose.yml run --rm -e API_URL=$(API_URL) artillery 
 
 # Builder
 all: clean package deploy
@@ -20,12 +21,12 @@ deploy: ../.env
 remove: ../.env
 	$(SLS) remove
 
+# Artillery
 baseLine:
-	echo $(API_URL)
-	API_URL=$(API_URL) artillery run --output $(RUNTIME).json ../../artillery/runtime_baseline.yml
+	$(ARTILLERY) run --output $(RUNTIME).json reports/runtime_baseline.yml
 
-baseLineReport:
-	artillery report $(RUNTIME).json
+report:
+	$(ARTILLERY) report reports/$(RUNTIME).json
 
 # Helpers
 ../.env:
@@ -36,3 +37,6 @@ shellBuilder:
 
 shellServerless:
 	$(SLS) bash
+
+shellArtillery:
+	$(ARTILLERY)

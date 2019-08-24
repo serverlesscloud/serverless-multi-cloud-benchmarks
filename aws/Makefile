@@ -1,5 +1,4 @@
 RUNTIMES ?= $(shell ls -d */)
-COMPOSE_RUN_AUTH = docker-compose run --rm gauth
 
 .env:
 	cp .env.template .env
@@ -21,9 +20,6 @@ remove: .env
 
 reset: .env
 	@$(foreach RUNTIME, $(RUNTIMES), $(call resetDynamo, $(RUNTIME)) )
-
-shell:
-	$(COMPOSE_RUN_AUTH) sh
 
 define resetDynamo
 	echo "deleting items in $(RUNTIME)"

@@ -5,8 +5,7 @@ provider:
   runtime: dotnetcore2.1
 
 package:
-  exclude: ./**
-  include: bin/release/netcoreapp2.1/publish/deploy-package.zip
+  artifact: bin/release/netcoreapp2.1/publish/deploy-package.zip
 
 functions:
   hello:

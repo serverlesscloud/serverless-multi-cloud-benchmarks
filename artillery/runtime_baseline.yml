@@ -1,8 +1,8 @@
 config:
   target: "{{ $processEnvironment.API_URL }}"
   phases:
-    - duration: 600
-      arrivalRate: 10
+    - duration: "{{ $processEnvironment.DURATION }}"
+      arrivalRate: "{{ $processEnvironment.RATE }}"
       
 scenarios:
   - name "Hello":
