@@ -83,7 +83,6 @@ commands:
           path: ~/project/artillery/reports
 
 jobs:
-  # Build Jobs
   build-aws-csharp2-1:
     executor: ubuntu 
     steps:
@@ -238,7 +237,7 @@ jobs:
       - benchmark:
           provider: aws
           runtime: aws-nodejs8.10
-  benchmark-aws-nodejs8-10:
+  benchmark-aws-nodejs10-x:
     executor: ubuntu 
     steps:
       - benchmark:
