@@ -113,13 +113,13 @@ jobs:
     steps:
       - build:
           provider: aws
-          runtime: aws-nodejs10.x
-  build-aws-nodejs8-10:
+          runtime: aws-nodejs8.10
+  build-aws-nodejs10-x:
     executor: ubuntu 
     steps:
       - build:
           provider: aws
-          runtime: aws-nodejs8.10
+          runtime: aws-nodejs10.x
   build-aws-python2-7:
     executor: ubuntu 
     steps:
