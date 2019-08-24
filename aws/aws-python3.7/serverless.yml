@@ -1,3 +1,5 @@
+org: serverlesscloud
+app: multi-cloud-benchmark
 service: aws-python3-7
 
 provider:

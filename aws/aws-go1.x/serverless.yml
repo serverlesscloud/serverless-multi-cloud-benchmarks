@@ -1,3 +1,5 @@
+org: serverlesscloud
+app: multi-cloud-benchmark
 service: aws-go1-x
 
 provider:

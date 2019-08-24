@@ -1,3 +1,5 @@
+org: serverlesscloud
+app: multi-cloud-benchmark
 service: aws-ruby-2-5
 
 provider:

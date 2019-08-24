@@ -20,12 +20,13 @@ commands:
       - attach_workspace:
           at: ~/project/<< parameters.provider >>/<< parameters.runtime >>
       - run:
-          name: Build
+          name: Build and Package
           working_directory: ~/project/<< parameters.provider >>/<< parameters.runtime >>
-          command: make build
+          command: make build package
       - persist_to_workspace:
           root: ~/project/<< parameters.provider >>/<< parameters.runtime >>
           paths:
+            - .serverless
             - target
             - bin
   deployer:
@@ -112,6 +113,12 @@ jobs:
     steps:
       - build:
           provider: aws
+          runtime: aws-nodejs10.x
+  build-aws-nodejs8-10:
+    executor: ubuntu 
+    steps:
+      - build:
+          provider: aws
           runtime: aws-nodejs8.10
   build-aws-python2-7:
     executor: ubuntu 
@@ -169,6 +176,12 @@ jobs:
       - deployer:
           provider: aws
           runtime: aws-nodejs8.10
+  deploy-aws-nodejs10-x:
+    executor: ubuntu 
+    steps:
+      - deployer:
+          provider: aws
+          runtime: aws-nodejs10.x
   deploy-aws-python2-7:
     executor: ubuntu 
     steps:
@@ -225,6 +238,12 @@ jobs:
       - benchmark:
           provider: aws
           runtime: aws-nodejs8.10
+  benchmark-aws-nodejs8-10:
+    executor: ubuntu 
+    steps:
+      - benchmark:
+          provider: aws
+          runtime: aws-nodejs10.x
   benchmark-aws-python2-7:
     executor: ubuntu 
     steps:
@@ -267,6 +286,7 @@ workflows:
       - build-aws-go1-x
       - build-aws-java8
       - build-aws-nodejs8-10
+      - build-aws-nodejs10-x
       - build-aws-python2-7
       - build-aws-python3-6
       - build-aws-python3-7
@@ -303,6 +323,12 @@ workflows:
               only: master
           requires: 
             - build-aws-nodejs8-10
+      - deploy-aws-nodejs10-x:
+          filters:
+            branches:
+              only: master
+          requires: 
+            - build-aws-nodejs10-x
       - deploy-aws-python2-7:
           filters:
             branches:
@@ -328,34 +354,41 @@ workflows:
           requires: 
             - build-aws-ruby2-5
 
+  benchmark-and-report:
+    jobs:
+      - hold:
+          type: approval
       # Benchmark
       - benchmark-aws-csharp2-1:
-          requires: 
-            - deploy-aws-csharp2-1
+          # requires: 
+          #   - deploy-aws-csharp2-1
       - benchmark-aws-fsharp2-1:
-          requires: 
-            - deploy-aws-fsharp2-1
+          # requires: 
+          #   - deploy-aws-fsharp2-1
       - benchmark-aws-go1-x:
-          requires: 
-            - deploy-aws-go1-x
+          # requires: 
+          #   - deploy-aws-go1-x
       - benchmark-aws-java8:
-          requires: 
-            - deploy-aws-java8
+          # requires: 
+          #   - deploy-aws-java8
       - benchmark-aws-nodejs8-10:
-          requires: 
-            - deploy-aws-nodejs8-10
+          # requires: 
+          #   - deploy-aws-nodejs8-10
+      - benchmark-aws-nodejs10-x:
+          # requires: 
+          #   - deploy-aws-nodejs10-x
       - benchmark-aws-python2-7:
-          requires: 
-            - deploy-aws-python2-7
+          # requires: 
+          #   - deploy-aws-python2-7
       - benchmark-aws-python3-6:
-          requires: 
-            - deploy-aws-python3-6
+          # requires: 
+          #   - deploy-aws-python3-6
       - benchmark-aws-python3-7:
-          requires: 
-            - deploy-aws-python3-7
+          # requires: 
+          #   - deploy-aws-python3-7
       - benchmark-aws-ruby2-5:
-          requires: 
-            - deploy-aws-ruby2-5
+          # requires: 
+          #   - deploy-aws-ruby2-5
       # Report
       - report-aws:
           requires: 
@@ -364,6 +397,7 @@ workflows:
             - benchmark-aws-go1-x
             - benchmark-aws-java8
             - benchmark-aws-nodejs8-10
+            - benchmark-aws-nodejs10-x
             - benchmark-aws-python2-7
             - benchmark-aws-python3-6
             - benchmark-aws-python3-7

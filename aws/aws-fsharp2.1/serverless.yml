@@ -1,3 +1,5 @@
+org: serverlesscloud
+app: multi-cloud-benchmark
 service: aws-fsharp2-1
 
 provider:

@@ -1,3 +1,5 @@
+org: serverlesscloud
+app: multi-cloud-benchmark
 service: aws-java8
 provider:
   name: aws
