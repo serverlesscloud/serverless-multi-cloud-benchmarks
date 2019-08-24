@@ -173,45 +173,73 @@ jobs:
       - deployer:
           provider: aws
           runtime: aws-ruby2.5
+  
+  # Benchmark Jobs
   benchmark-aws-ruby2-5:
     executor: ubuntu 
     steps:
       - benchmark:
           provider: aws
           runtime: aws-ruby2.5
+  benchmark-aws-go1-x:
+    executor: ubuntu 
+    steps:
+      - benchmark:
+          provider: aws
+          runtime: aws-go1.x
+  benchmark-aws-java8:
+    executor: ubuntu 
+    steps:
+      - benchmark:
+          provider: aws
+          runtime: aws-java8
+
+  # Report Jobs
   report-aws-ruby2-5:
     executor: ubuntu 
     steps:
       - report:
           provider: aws
           runtime: aws-ruby2.5
+  report-aws-go1-x:
+    executor: ubuntu 
+    steps:
+      - report:
+          provider: aws
+          runtime: aws-go1.x
+  report-aws-java8:
+    executor: ubuntu 
+    steps:
+      - report:
+          provider: aws
+          runtime: aws-java8
 
 workflows:
   version: 2
   build-deploy-aws:
     jobs:
       # Build
-      - build-aws-csharp2-1
-      - build-aws-fsharp2-1
+      # - build-aws-csharp2-1
+      # - build-aws-fsharp2-1
       - build-aws-go1-x
       - build-aws-java8
-      - build-aws-nodejs8-10
-      - build-aws-python3-7
+      # - build-aws-nodejs8-10
+      # - build-aws-python3-7
       - build-aws-ruby2-5
 
       # Deploy
-      - deploy-aws-csharp2-1:
-          filters:
-            branches:
-              only: master
-          requires: 
-            - build-aws-csharp2-1
-      - deploy-aws-fsharp2-1:
-          filters:
-            branches:
-              only: master
-          requires: 
-            - build-aws-fsharp2-1
+      # - deploy-aws-csharp2-1:
+      #     filters:
+      #       branches:
+      #         only: master
+      #     requires: 
+      #       - build-aws-csharp2-1
+      # - deploy-aws-fsharp2-1:
+      #     filters:
+      #       branches:
+      #         only: master
+      #     requires: 
+      #       - build-aws-fsharp2-1
       - deploy-aws-go1-x:
           filters:
             branches:
@@ -224,18 +252,18 @@ workflows:
               only: master
           requires: 
             - build-aws-java8
-      - deploy-aws-nodejs8-10:
-          filters:
-            branches:
-              only: master
-          requires: 
-            - build-aws-nodejs8-10
-      - deploy-aws-python3-7:
-          filters:
-            branches:
-              only: master
-          requires: 
-            - build-aws-python3-7
+      # - deploy-aws-nodejs8-10:
+      #     filters:
+      #       branches:
+      #         only: master
+      #     requires: 
+      #       - build-aws-nodejs8-10
+      # - deploy-aws-python3-7:
+      #     filters:
+      #       branches:
+      #         only: master
+      #     requires: 
+      #       - build-aws-python3-7
       - deploy-aws-ruby2-5:
           filters:
             branches:
@@ -247,8 +275,20 @@ workflows:
       - benchmark-aws-ruby2-5:
           requires: 
             - deploy-aws-ruby2-5
+      - benchmark-aws-go1-x:
+          requires: 
+            - deploy-aws-go1-x
+      - benchmark-aws-java8:
+          requires: 
+            - deploy-aws-java8
 
       # Report
       - report-aws-ruby2-5:
           requires: 
             - benchmark-aws-ruby2-5
+      - report-aws-go1-x:
+          requires: 
+            - benchmark-aws-go1-x
+      - report-aws-java8:
+          requires: 
+            - benchmark-aws-java8

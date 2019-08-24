@@ -38,6 +38,11 @@ services:
     working_dir: /var/task/aws-nodejs8.10
     volumes:
       - .:/var/task
+  aws-nodejs10.x:
+    image: lambci/lambda:build-nodejs10.x
+    working_dir: /var/task/aws-nodejs10.x
+    volumes:
+      - .:/var/task
   aws-java8:
     image: lambci/lambda:build-java8
     working_dir: /var/task/aws-java8

@@ -21,12 +21,13 @@ https://read.acloud.guru/comparing-aws-lambda-performance-of-node-js-python-java
 
 - [x] Hello world baseline
 - [ ] Dynamo DB read write
+- [ ] Serverless Containers (Fargate, Cloud Run, Container Instances etc)
 - [ ] Relational read write
 - [ ] GraphQL
-- [ ] Serverless Containers (Fargate, Cloud Run, Container Instances etc)
 
 ## House Rules
 
 1. No caching
 2. Memory = 1GB
 3. ID need to be UUID v4
+4. Zero initial instances for serverless containers

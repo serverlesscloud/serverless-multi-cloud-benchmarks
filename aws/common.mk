@@ -23,7 +23,7 @@ remove: ../.env
 
 # Artillery
 baseLine: ../.env
-	$(ARTILLERY) run --output $(RUNTIME).json reports/runtime_baseline.yml
+	$(ARTILLERY) run --output reports/$(RUNTIME).json runtime_baseline.yml
 
 report: ../.env
 	$(ARTILLERY) report reports/$(RUNTIME).json

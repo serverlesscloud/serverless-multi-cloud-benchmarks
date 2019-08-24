@@ -5,7 +5,8 @@ apis.txt
 .env.auth
 
 # performance tests
-reports
+reports/*.html
+reports/*.json
 
 # IDEs
 *.iml
