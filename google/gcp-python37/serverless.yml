@@ -1,0 +1,23 @@
+service: gcp-nodejs8
+
+provider:
+  name: google
+  memorySize: 1024
+  runtime: python37
+  project: serverless-cloud-benchmark
+  credentials: ~/.gcloud/benchmark.json # path must be absolute
+
+plugins:
+  - serverless-google-cloudfunctions
+
+package:
+  exclude:
+    - node_modules/**
+    - .gitignore
+    - .git/**
+
+functions:
+  gcp-python37-hello:
+    handler: hello
+    events:
+      - http: /hello

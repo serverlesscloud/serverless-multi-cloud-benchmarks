@@ -2,10 +2,9 @@ service: gcp-nodejs8
 
 provider:
   name: google
-  region: asia-northeast1
   memorySize: 1024
   runtime: nodejs8
-  project: contino-apac-dev
+  project: serverless-cloud-benchmark
   credentials: ~/.gcloud/benchmark.json # path must be absolute
 
 plugins:

@@ -1,0 +1,9 @@
+{
+  "name": "google-python37",
+  "version": "0.1.0",
+  "description": "Python http endpoints with the Google Cloud Functions Serverless Framework plugin.",
+  "main": "main.py",
+  "dependencies": {
+    "serverless-google-cloudfunctions": "^2.3.2"
+  }
+}
