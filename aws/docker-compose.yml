@@ -33,7 +33,7 @@ services:
     volumes:
       - .:/var/task
   aws-java8:
-    image: maven:3.5.4-jdk-8
+    image: lambci/lambda:build-java8
     working_dir: /var/task/aws-java8
     volumes:
       - .:/var/task
@@ -47,4 +47,14 @@ services:
     image: lambci/lambda:build-python3.6
     working_dir: /var/task/aws-python3.6
     volumes:
-      - .:/var/task  
+      - .:/var/task
+  aws-ruby2.5:
+    image: lambci/lambda:build-ruby2.5
+    working_dir: /var/task/aws-ruby2.5
+    volumes:
+      - .:/var/task
+  gauth:
+    image: contino/aws-google-auth:0.0.28
+    env_file: .env.auth
+    volumes:
+      - ~/.aws:/root/.aws  

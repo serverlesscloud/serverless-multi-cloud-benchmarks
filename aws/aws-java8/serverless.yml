@@ -1,4 +1,4 @@
-service: aws-java-maven
+service: aws-java8
 provider:
   name: aws
   runtime: java8

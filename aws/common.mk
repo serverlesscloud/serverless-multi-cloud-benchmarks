@@ -20,6 +20,18 @@ deploy: ../.env
 remove: ../.env
 	$(SLS) remove
 
+baseline:
+	artillery run --output $(RUNTIME).json ../artillery/runtime_baseline.yml
+
+baselineReport:
+	artillery report $(RUNTIME).json
+
 # Helpers
 ../.env:
 	cp ../.env.template ../.env
+
+shellBuilder:
+	$(BUILDER) bash
+
+shellServerless:
+	$(SLS) bash

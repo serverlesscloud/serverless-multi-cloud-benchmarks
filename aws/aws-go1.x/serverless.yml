@@ -5,10 +5,10 @@ provider:
   runtime: go1.x
 
 package:
- exclude:
-   - ./**
- include:
-   - ./bin/**
+  exclude:
+    - ./**
+  include:
+    - ./bin/**
 
 functions:
   hello:

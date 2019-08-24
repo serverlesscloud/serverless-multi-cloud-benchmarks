@@ -1,6 +1,0 @@
-FROM lambci/lambda:build-dotnetcore2.1
-
-ENV PATH="${PATH}:/root/.dotnet/tools"
-ENV DOTNET_ROOT=/var/lang/bin
-
-RUN	dotnet tool install -g Amazon.Lambda.Tools
