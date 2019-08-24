@@ -1,0 +1,63 @@
+service: aws-nodejs10-x
+
+provider:
+  name: aws
+  runtime: nodejs10.x
+  environment:
+    DYNAMODB_TABLE: ${self:service}
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - dynamodb:Query
+        - dynamodb:Scan
+        - dynamodb:GetItem
+        - dynamodb:PutItem
+        - dynamodb:UpdateItem
+        - dynamodb:DeleteItem
+        - dynamodb:DeleteTable
+      Resource: "arn:aws:dynamodb:${opt:region, self:provider.region}:*:table/${self:provider.environment.DYNAMODB_TABLE}"
+
+functions:
+  hello:
+    handler: handler.hello
+    events:
+      - http:
+          path: /
+          method: get
+  create:
+    handler: users/create.create
+    events:
+      - http:
+          path: /users
+          method: post
+  read:
+    handler: users/read.read
+    events:
+      - http:
+          path: /users/{id}
+          method: get
+  list:
+    handler: users/list.list
+    events:
+      - http:
+          path: /users
+          method: get
+
+resources:
+  Resources:
+    TodosDynamoDbTable:
+      Type: 'AWS::DynamoDB::Table'
+      DeletionPolicy: Delete
+      Properties:
+        AttributeDefinitions:
+          -
+            AttributeName: id
+            AttributeType: S
+        KeySchema:
+          -
+            AttributeName: id
+            KeyType: HASH
+        ProvisionedThroughput:
+          ReadCapacityUnits: 10
+          WriteCapacityUnits: 10
+        TableName: ${self:provider.environment.DYNAMODB_TABLE}

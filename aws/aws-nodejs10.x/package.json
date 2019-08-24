@@ -1,0 +1,8 @@
+{
+  "name": "aws-nodejs10.x",
+  "version": "1.0.0",
+  "description": "AWS Node.js 10.x",
+  "dependencies": {
+    "uuid": "^2.0.3"
+  }
+}
