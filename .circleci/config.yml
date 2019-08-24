@@ -65,7 +65,7 @@ commands:
       - persist_to_workspace:
           root: ~/project/artillery
           paths: 
-            - reports
+            - reports/*.json
   report:
     parameters:
       provider: 
@@ -359,15 +359,35 @@ workflows:
           type: approval
       # Benchmark
       - benchmark-aws-csharp2-1
+          requires: 
+            - hold
       - benchmark-aws-fsharp2-1
+          requires: 
+            - hold
       - benchmark-aws-go1-x
+          requires: 
+            - hold
       - benchmark-aws-java8
+          requires: 
+            - hold
       - benchmark-aws-nodejs8-10
+          requires: 
+            - hold
       - benchmark-aws-nodejs10-x
+          requires: 
+            - hold
       - benchmark-aws-python2-7
+          requires: 
+            - hold
       - benchmark-aws-python3-6
+          requires: 
+            - hold
       - benchmark-aws-python3-7
+          requires: 
+            - hold
       - benchmark-aws-ruby2-5
+          requires: 
+            - hold
       # Report
       - report-aws:
           requires: 
