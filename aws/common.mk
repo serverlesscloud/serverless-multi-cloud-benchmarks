@@ -34,9 +34,3 @@ report: ../.env
 
 shellBuilder:
 	$(BUILDER) bash
-
-shellServerless:
-	$(SLS) bash
-
-shellArtillery:
-	$(ARTILLERY)

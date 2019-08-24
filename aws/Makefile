@@ -12,6 +12,12 @@ package: .env
 deploy: .env
 	@$(foreach RUNTIME, $(RUNTIMES),cd $(RUNTIME); make deploy && cd ..;)
 
+baseLine: .env
+	@$(foreach RUNTIME, $(RUNTIMES),cd $(RUNTIME); make baseLine && cd ..;)
+
+report: .env
+	@$(foreach RUNTIME, $(RUNTIMES),cd $(RUNTIME); make report && cd ..;)
+
 clean: .env
 	@$(foreach RUNTIME, $(RUNTIMES),cd $(RUNTIME); make clean && cd ..;)
 

@@ -71,19 +71,16 @@ commands:
       provider: 
         type: string
         default: "aws"
-      runtime:
-        type: string
-        default: ""
     steps:
       - checkout
       - attach_workspace:
           at: ~/project/artillery 
       - run:
           name: Performance Report
-          working_directory: ~/project/<< parameters.provider >>/<< parameters.runtime >>
+          working_directory: ~/project/<< parameters.provider >>
           command: make report
       - store_artifacts:
-          path: ~/project/artillery/report
+          path: ~/project/artillery/reports
 
 jobs:
   # Build Jobs
@@ -117,6 +114,18 @@ jobs:
       - build:
           provider: aws
           runtime: aws-nodejs8.10
+  build-aws-python2-7:
+    executor: ubuntu 
+    steps:
+      - build:
+          provider: aws
+          runtime: aws-python2.7
+  build-aws-python3-6:
+    executor: ubuntu 
+    steps:
+      - build:
+          provider: aws
+          runtime: aws-python3.6
   build-aws-python3-7:
     executor: ubuntu 
     steps:
@@ -161,6 +170,18 @@ jobs:
       - deployer:
           provider: aws
           runtime: aws-nodejs8.10
+  deploy-aws-python2-7:
+    executor: ubuntu 
+    steps:
+      - deployer:
+          provider: aws
+          runtime: aws-python2.7
+  deploy-aws-python3-6:
+    executor: ubuntu 
+    steps:
+      - deployer:
+          provider: aws
+          runtime: aws-python3.6
   deploy-aws-python3-7:
     executor: ubuntu 
     steps:
@@ -187,12 +208,6 @@ jobs:
       - benchmark:
           provider: aws
           runtime: aws-fsharp2.1
-  benchmark-aws-ruby2-5:
-    executor: ubuntu 
-    steps:
-      - benchmark:
-          provider: aws
-          runtime: aws-ruby2.5
   benchmark-aws-go1-x:
     executor: ubuntu 
     steps:
@@ -205,38 +220,43 @@ jobs:
       - benchmark:
           provider: aws
           runtime: aws-java8
-
-  # Report Jobs
-  report-aws-csharp2-1:
+  benchmark-aws-python2-7:
     executor: ubuntu 
     steps:
-      - report:
+      - benchmark:
           provider: aws
-          runtime: aws-csharp2.1  
-  report-aws-fsharp2-1:
+          runtime: aws-python2.7
+  benchmark-aws-python3-6:
     executor: ubuntu 
     steps:
-      - report:
+      - benchmark:
           provider: aws
-          runtime: aws-fsharp2.1
-  report-aws-ruby2-5:
+          runtime: aws-python3.6
+  benchmark-aws-python3-7:
     executor: ubuntu 
     steps:
-      - report:
+      - benchmark:
+          provider: aws
+          runtime: aws-python3.7
+  benchmark-aws-nodejs8-10:
+    executor: ubuntu 
+    steps:
+      - benchmark:
+          provider: aws
+          runtime: aws-nodejs8.10
+  benchmark-aws-ruby2-5:
+    executor: ubuntu 
+    steps:
+      - benchmark:
           provider: aws
           runtime: aws-ruby2.5
-  report-aws-go1-x:
+
+  # Report Jobs
+  report-aws:
     executor: ubuntu 
     steps:
       - report:
           provider: aws
-          runtime: aws-go1.x
-  report-aws-java8:
-    executor: ubuntu 
-    steps:
-      - report:
-          provider: aws
-          runtime: aws-java8
 
 workflows:
   version: 2
@@ -248,6 +268,8 @@ workflows:
       - build-aws-go1-x
       - build-aws-java8
       - build-aws-nodejs8-10
+      - build-aws-python2-7
+      - build-aws-python3-6
       - build-aws-python3-7
       - build-aws-ruby2-5
 
@@ -282,6 +304,18 @@ workflows:
               only: master
           requires: 
             - build-aws-nodejs8-10
+      - deploy-aws-python2-7:
+          filters:
+            branches:
+              only: master
+          requires: 
+            - build-aws-python2-7      
+      - deploy-aws-python3-6:
+          filters:
+            branches:
+              only: master
+          requires: 
+            - build-aws-python3-6
       - deploy-aws-python3-7:
           filters:
             branches:
@@ -302,29 +336,34 @@ workflows:
       - benchmark-aws-fsharp2-1:
           requires: 
             - deploy-aws-fsharp2-1
-      - benchmark-aws-ruby2-5:
-          requires: 
-            - deploy-aws-ruby2-5
       - benchmark-aws-go1-x:
           requires: 
             - deploy-aws-go1-x
       - benchmark-aws-java8:
           requires: 
             - deploy-aws-java8
-
+      - benchmark-aws-python2-7:
+          requires: 
+            - deploy-aws-python2-7
+      - benchmark-aws-python3-6:
+          requires: 
+            - deploy-aws-python3-6
+      - benchmark-aws-python3-7:
+          requires: 
+            - deploy-aws-python3-7
+      - benchmark-aws-ruby2-5:
+          requires: 
+            - deploy-aws-ruby2-5
       # Report
-      - report-aws-csharp2-1:
+      - report-aws:
           requires: 
             - benchmark-aws-csharp2-1
-      - report-aws-fsharp2-1:
-          requires: 
             - benchmark-aws-fsharp2-1
-      - report-aws-ruby2-5:
-          requires: 
-            - benchmark-aws-ruby2-5
-      - report-aws-go1-x:
-          requires: 
             - benchmark-aws-go1-x
-      - report-aws-java8:
-          requires: 
             - benchmark-aws-java8
+            - benchmark-aws-nodejs8-10
+            - benchmark-aws-python2-7
+            - benchmark-aws-python3-6
+            - benchmark-aws-python3-7
+            - benchmark-aws-ruby2-5
+            

@@ -3,7 +3,6 @@ service: aws-bash
 provider:
   name: aws
   runtime: provided
-  region: ap-southeast-2
 
 functions:
   hello:
