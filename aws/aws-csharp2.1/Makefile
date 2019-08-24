@@ -1,4 +1,5 @@
 RUNTIME=aws-csharp2.1
+API_URL=$(AWS_CSHARP2_1_URL)
 
 include ../common.mk
 

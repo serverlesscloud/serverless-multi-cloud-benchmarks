@@ -1,4 +1,5 @@
 RUNTIME=aws-fsharp2.1
+API_URL=$(AWS_FSHARP2_1_URL)
 
 include ../common.mk
 

@@ -1,4 +1,5 @@
 RUNTIME=aws-go1.x
+API_URL=$(AWS_GO1_X_URL)
 
 include ../common.mk
 
