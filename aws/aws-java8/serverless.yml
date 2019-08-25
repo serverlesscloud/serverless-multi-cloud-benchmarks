@@ -3,7 +3,7 @@ app: multi-cloud-benchmark
 service: aws-java8
 provider:
   name: aws
-  runtime: java8
+  runtime: java-1.8.0-openjdk
 package:
   artifact: target/hello-dev.jar
 

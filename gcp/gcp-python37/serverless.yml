@@ -23,4 +23,4 @@ functions:
   gcp-python37-hello:
     handler: hello
     events:
-      - http: /hello
+      - http: gcp-python37/hello

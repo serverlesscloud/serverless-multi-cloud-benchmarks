@@ -23,8 +23,4 @@ functions:
   gcp-nodejs10-hello:
     handler: hello
     events:
-      - http: /hello
-  gcp-nodejs10-users:
-    handler: users
-    events:
-      - http: /users
+      - http: gcp-nodejs10/hello

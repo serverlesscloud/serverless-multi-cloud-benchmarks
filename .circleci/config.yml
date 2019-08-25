@@ -266,6 +266,12 @@ jobs:
       - benchmark:
           provider: aws
           runtime: aws-ruby2.5
+  benchmark-gcp-nodejs8:
+    executor: ubuntu 
+    steps:
+      - benchmark:
+          provider: gcp
+          runtime: gcp-nodejs8
 
   # Report Jobs
   report-aws:
@@ -385,6 +391,9 @@ workflows:
           requires: 
             - hold
       - benchmark-aws-ruby2-5:
+          requires: 
+            - hold
+      - benchmark-gcp-nodejs8:
           requires: 
             - hold
       # Report
