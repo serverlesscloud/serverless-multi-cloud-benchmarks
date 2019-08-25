@@ -1,8 +1,11 @@
+org: serverlesscloud
+app: multi-cloud-benchmark
 service: gcp-nodejs8
 
 provider:
   name: google
   stage: dev
+  memorySize: 1024
   runtime: nodejs8
   region: us-east4
   project: serverless-cloud-benchmarks

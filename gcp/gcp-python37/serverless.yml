@@ -1,9 +1,12 @@
+org: serverlesscloud
+app: multi-cloud-benchmark
 service: gcp-python37
 
 provider:
   name: google
   memorySize: 1024
   runtime: python37
+  region: us-east4
   project: serverless-cloud-benchmarks
   credentials: ~/.gcloud/serverless-cloud-benchmarks.json # path must be absolute
 

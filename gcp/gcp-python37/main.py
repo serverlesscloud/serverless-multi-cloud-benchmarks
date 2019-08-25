@@ -3,7 +3,7 @@
 
 import json
 
-def endpoint(request):
+def hello(request):
     response = {
         "statusCode": 200,
         "body": "hello"

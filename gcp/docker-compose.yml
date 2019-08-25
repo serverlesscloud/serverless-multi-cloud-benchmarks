@@ -8,7 +8,22 @@ services:
       - ~/.gcloud:/root/.gcloud
       - ../:/opt/app
   gcp-nodejs8:
-    image: launcher.gcr.io/google/nodejs
+    image: nodjs:8
     working_dir: /var/task/gcp/gcp-nodejs8
+    volumes:
+      - ../:/var/task
+  gcp-nodejs10:
+    image: node:10
+    working_dir: /var/task/gcp/gcp-nodejs10
+    volumes:
+      - ../:/var/task
+  gcp-go111:
+    image: golang:11
+    working_dir: /var/task/gcp/gcp-go111
+    volumes:
+      - ../:/var/task
+  gcp-python37:
+    image: python:3.7
+    working_dir: /var/task/gcp/gcp-python37
     volumes:
       - ../:/var/task

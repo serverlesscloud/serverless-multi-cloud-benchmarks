@@ -1,9 +1,12 @@
+org: serverlesscloud
+app: multi-cloud-benchmark
 service: gcp-go111
 
 provider:
   name: google
   memorySize: 1024
   runtime: go111
+  region: us-east4
   project: serverless-cloud-benchmark
   credentials: ~/.gcloud/benchmark.json # path must be absolute
 
@@ -21,14 +24,3 @@ functions:
     handler: hello
     events:
       - http: /hello
-  gcp-go111-users:
-    handler: users
-    events:
-      - http: /users
-
-#resources:
-#  resources:
-#    - type: storage.v1.bucket
-#      name: my-serverless-service-bucket
-#  imports:
-#    - path: my_template.jinja

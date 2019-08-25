@@ -1,6 +1,6 @@
-RUNTIME=gcp-nodejs8
+RUNTIME=gcp-nodejs10
 
-include ../common.mk
+include ../../shared.mk
 
 # Internals
 _clean:

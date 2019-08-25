@@ -1,10 +1,10 @@
-RUNTIME=google-nodejs8
+RUNTIME=gcp-python37
 
-include ../common.mk
+include ../../shared.mk
 
 # Internals
 _clean:
 	rm -rf .serverless bin node_modules
 
 _build:
-	npm install --ignore-scripts
+	@echo "nothing to build"
