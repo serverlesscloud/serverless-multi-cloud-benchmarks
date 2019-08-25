@@ -1,11 +1,11 @@
-service: gcp-nodejs8
+service: gcp-nodejs10
 
 provider:
   name: google
   memorySize: 1024
   runtime: nodejs10
-  project: serverless-benchmark
-  credentials: ~/.gcloud/benchmark.json # path must be absolute
+  project: serverless-cloud-benchmarks
+  credentials: ~/.gcloud/serverless-cloud-benchmarks.json # path must be absolute
 
 plugins:
   - serverless-google-cloudfunctions
@@ -17,18 +17,11 @@ package:
     - .git/**
 
 functions:
-  gcp-nodejs8-hello:
+  gcp-nodejs10-hello:
     handler: hello
     events:
       - http: /hello
-  gcp-nodejs8-users:
+  gcp-nodejs10-users:
     handler: users
     events:
       - http: /users
-
-#resources:
-#  resources:
-#    - type: storage.v1.bucket
-#      name: my-serverless-service-bucket
-#  imports:
-#    - path: my_template.jinja

@@ -1,9 +1,9 @@
-service: gcp-nodejs8
+service: gcp-go111
 
 provider:
   name: google
   memorySize: 1024
-  runtime: nodejs8
+  runtime: go111
   project: serverless-cloud-benchmark
   credentials: ~/.gcloud/benchmark.json # path must be absolute
 
@@ -17,11 +17,11 @@ package:
     - .git/**
 
 functions:
-  gcp-nodejs8-hello:
+  gcp-go111-hello:
     handler: hello
     events:
       - http: /hello
-  gcp-nodejs8-users:
+  gcp-go111-users:
     handler: users
     events:
       - http: /users

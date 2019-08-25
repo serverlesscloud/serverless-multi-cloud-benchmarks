@@ -60,7 +60,6 @@ commands:
           working_directory: ~/project/<< parameters.provider >>/<< parameters.runtime >>
           command: make baseLine
           environment:
-            DURATION: 60
             RATE: 10
       - persist_to_workspace:
           root: ~/project/artillery

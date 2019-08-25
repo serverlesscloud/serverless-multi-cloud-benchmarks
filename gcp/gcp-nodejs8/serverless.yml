@@ -1,0 +1,32 @@
+service: gcp-nodejs8
+
+provider:
+  name: google
+  stage: dev
+  runtime: nodejs8
+  region: us-east4
+  project: serverless-cloud-benchmarks
+  credentials: ~/.gcloud/serverless-cloud-benchmarks.json
+
+plugins:
+  - serverless-google-cloudfunctions
+
+package:
+  exclude:
+    - node_modules/**
+    - .gitignore
+    - .git/**
+
+functions:
+  hello:
+    handler: hello
+    events:
+      - http: hello
+# you can define resources, templates etc. the same way you would in a
+# Google Cloud deployment configuration
+#resources:
+#  resources:
+#    - type: storage.v1.bucket
+#      name: my-serverless-service-bucket
+#  imports:
+#    - path: my_template.jinja

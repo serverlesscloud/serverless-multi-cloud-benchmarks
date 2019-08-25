@@ -1,11 +1,11 @@
-service: gcp-nodejs8
+service: gcp-python37
 
 provider:
   name: google
   memorySize: 1024
   runtime: python37
-  project: serverless-cloud-benchmark
-  credentials: ~/.gcloud/benchmark.json # path must be absolute
+  project: serverless-cloud-benchmarks
+  credentials: ~/.gcloud/serverless-cloud-benchmarks.json # path must be absolute
 
 plugins:
   - serverless-google-cloudfunctions

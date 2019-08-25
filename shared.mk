@@ -1,5 +1,5 @@
 BUILDER=docker-compose -f ../docker-compose.yml run --rm $(RUNTIME)
-SLS=docker-compose -f ../docker-compose.yml run --rm -w /opt/app/$(RUNTIME) sls
+SLS=docker-compose -f ../docker-compose.yml run --rm -w /opt/app/gcp/$(RUNTIME) sls
 ARTILLERY=docker-compose -f ../docker-compose.yml run --rm -e API_URL=$(API_URL) artillery 
 ARTILLERY_BASH=docker-compose -f ../docker-compose.yml run --rm -e API_URL=$(API_URL) --entrypoint bash artillery 
 
@@ -17,8 +17,10 @@ package: ../.env build
 	$(SLS) package
 
 deploy: ../.env
-	$(SLS) deploy --package .serverless
-
+	if test -d .serverless; then $(SLS) deploy --package .serverless; \
+	else $(SLS) deploy; \
+	fi
+	
 remove: ../.env
 	$(SLS) remove
 
@@ -33,8 +35,11 @@ report: ../.env
 ../.env:
 	cp ../.env.template ../.env
 
-shellBuilder:
+shellBuilder: ../.env
 	$(BUILDER) bash
 
-shellArtillery:
+shellSls: ../.env
+	$(SLS) bash
+
+shellArtillery: ../.env
 	$(ARTILLERY_BASH)

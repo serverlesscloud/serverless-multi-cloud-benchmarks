@@ -6,6 +6,7 @@ services:
     entrypoint: serverless
     volumes:
       - ~/.aws:/root/.aws
+      - ~/.gcloud:/root/.gcloud
       - .:/opt/app
   artillery:
     image: serverlesscloud/artillery
@@ -64,3 +65,9 @@ services:
     working_dir: /var/task/aws-ruby2.5
     volumes:
       - .:/var/task 
+
+  gcp-nodejs8:
+    image: launcher.gcr.io/google/nodejs
+    working_dir: /var/task/gcp-nodejs8
+    volumes:
+      - .:/var/task

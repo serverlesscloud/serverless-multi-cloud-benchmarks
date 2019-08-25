@@ -1,0 +1,14 @@
+version: '3.4'
+services:
+  sls:
+    image: amaysim/serverless:1.49.0
+    env_file: .env
+    # entrypoint: serverless
+    volumes:
+      - ~/.gcloud:/root/.gcloud
+      - ../:/opt/app
+  gcp-nodejs8:
+    image: launcher.gcr.io/google/nodejs
+    working_dir: /var/task/gcp/gcp-nodejs8
+    volumes:
+      - ../:/var/task
