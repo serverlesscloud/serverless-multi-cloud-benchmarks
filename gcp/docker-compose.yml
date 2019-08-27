@@ -7,6 +7,12 @@ services:
     volumes:
       - ~/.gcloud:/root/.gcloud
       - ../:/opt/app
+  artillery:
+    image: serverlesscloud/artillery
+    env_file: .env
+    working_dir: /artillery
+    volumes:
+      - ../artillery:/artillery
   gcp-nodejs8:
     image: nodjs:8
     working_dir: /var/task/gcp/gcp-nodejs8

@@ -1,6 +1,6 @@
-RUNTIME=google-nodejs8
+RUNTIME=gcp-go111
 
-include ../common.mk
+include ../../shared.mk
 
 # Internals
 _clean:
