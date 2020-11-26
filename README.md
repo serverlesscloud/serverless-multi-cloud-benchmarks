@@ -1,6 +1,6 @@
 # Serverless Multi Cloud Benchmarks
 
-[![CircleCI](https://circleci.com/gh/yunspace/lambda-platform-perf-comparison.svg?style=svg)](https://circleci.com/gh/yunspace/lambda-platform-perf-comparison)
+[![CircleCI](https://circleci.com/gh/serverlesscloud/serverless-multi-cloud-benchmarks.svg?style=svg)](https://circleci.com/gh/serverlesscloud/serverless-multi-cloud-benchmarks)
 
 A multi cloud provider continuation of 
 
